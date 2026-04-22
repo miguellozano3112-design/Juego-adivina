@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🎮 Adivina el número</title>
+</head>
+<body>
+
+<h1>🎮 Adivina el número</h1>
+
+<input type="number" id="numero" placeholder="1-10">
+<button onclick="jugar()">Intentar</button>
+
+<p id="resultado"></p>
+<p id="vidas"></p>
+
+<script>
+let numeroSecreto;
+let vidas;
+let intentos;
+
+function iniciarJuego() {
+    numeroSecreto = Math.floor(Math.random() * 10) + 1;
+    vidas = 3;
+    intentos = 0;
+    document.getElementById("resultado").innerText = "";
+    document.getElementById("vidas").innerText = "❤️ Vidas: " + vidas;
+}
+
+function jugar() {
+    let numeroUsuario = parseInt(document.getElementById("numero").value);
+    intentos++;
+
+    if (numeroUsuario === numeroSecreto) {
+        document.getElementById("resultado").innerText =
+            "🎉 ¡Ganaste en " + intentos + " intentos!";
+        return;
+    }
+
+    if (numeroUsuario < numeroSecreto) {
+        document.getElementById("resultado").innerText = "📉 Muy bajo";
+    } else {
+        document.getElementById("resultado").innerText = "📈 Muy alto";
+    }
+
+    if (Math.abs(numeroUsuario - numeroSecreto) <= 2) {
+        document.getElementById("resultado").innerText += " 🔥 Muy cerca!";
+    }
+
+    vidas--;
+    document.getElementById("vidas").innerText = "❤️ Vidas: " + vidas;
+
+    if (vidas === 0) {
+        document.getElementById("resultado").innerText =
+            "💀 Perdiste. Era " + numeroSecreto;
+    }
+}
+
+iniciarJuego();
+</script>
+
+</body>
+</html>
