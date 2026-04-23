@@ -1,17 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>🎮 Adivina el número</title>
+    <title> Adivina el número</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #080808, #030303);
+            color: rgba(93, 12, 117, 0.884);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #df76a2;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(0,0,0,0.5);
+            width: 300px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn-jugar {
+            background-color: #22c55e;
+            color: rgb(250, 247, 247);
+        }
+
+        .btn-reiniciar {
+            background-color: #3b82f6;
+            color: rgb(235, 228, 228);
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        #resultado {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        #vidas {
+            margin-top: 10px;
+        }
+    </style>
 </head>
+
 <body>
 
-<h1>🎮 Adivina el número</h1>
+<div class="container">
+    <h1> Adivina el número</h1>
 
-<input type="number" id="numero" placeholder="1-10">
-<button onclick="jugar()">Intentar</button>
+    <input type="number" id="numero" placeholder="1-10">
 
-<p id="resultado"></p>
-<p id="vidas"></p>
+    <br>
+
+    <button class="btn-jugar" onclick="jugar()">Intentar</button>
+    <button class="btn-reiniciar" onclick="iniciarJuego()">Reiniciar</button>
+
+    <p id="resultado"></p>
+    <p id="vidas"></p>
+</div>
 
 <script>
 let numeroSecreto;
@@ -22,36 +97,43 @@ function iniciarJuego() {
     numeroSecreto = Math.floor(Math.random() * 10) + 1;
     vidas = 3;
     intentos = 0;
+
     document.getElementById("resultado").innerText = "";
-    document.getElementById("vidas").innerText = "❤️ Vidas: " + vidas;
+    document.getElementById("vidas").innerText = "Vidas: " + vidas;
 }
 
 function jugar() {
     let numeroUsuario = parseInt(document.getElementById("numero").value);
+
+    if (isNaN(numeroUsuario)) {
+        document.getElementById("resultado").innerText = "Ingresa un número válido";
+        return;
+    }
+
     intentos++;
 
     if (numeroUsuario === numeroSecreto) {
         document.getElementById("resultado").innerText =
-            "🎉 ¡Ganaste en " + intentos + " intentos!";
+            "¡Ganaste en " + intentos + " intentos!";
         return;
     }
 
     if (numeroUsuario < numeroSecreto) {
-        document.getElementById("resultado").innerText = "📉 Muy bajo";
+        document.getElementById("resultado").innerText = "Muy bajo";
     } else {
-        document.getElementById("resultado").innerText = "📈 Muy alto";
+        document.getElementById("resultado").innerText = "Muy alto";
     }
 
     if (Math.abs(numeroUsuario - numeroSecreto) <= 2) {
-        document.getElementById("resultado").innerText += " 🔥 Muy cerca!";
+        document.getElementById("resultado").innerText += "Muy cerca!";
     }
 
     vidas--;
-    document.getElementById("vidas").innerText = "❤️ Vidas: " + vidas;
+    document.getElementById("vidas").innerText = "Vidas: " + vidas;
 
     if (vidas === 0) {
         document.getElementById("resultado").innerText =
-            "💀 Perdiste. Era " + numeroSecreto;
+            "Perdiste. Era " + numeroSecreto;
     }
 }
 
@@ -60,3 +142,4 @@ iniciarJuego();
 
 </body>
 </html>
+
